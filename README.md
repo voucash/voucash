@@ -1,13 +1,14 @@
 VouCash
 ===========
 
-一个简单、易用的支付工具
+一个简单、易用、强大的支付工具，[VouCash官网](https://voucash.com/)
 
 特征:
 - 免注册、审核
 - 快速接入，低参数
 - 匿名，不可追踪
 - 成熟的插件支持
+- 比虚拟币支付转化率高
 
 工作原理
 ------
@@ -16,3 +17,11 @@ VouCash
 
 任何人拥有代金券，都可以在[VouCash提现](https://voucash.com/cn/redeem)
 
+支持插件
+------
+
+以下插件均根据[官方API](https://voucash.com/cn/merchant)开发
+
+- [whmcs](https://github.com/voucash/whmcs)
+- [v2board](https://github.com/voucash/v2board)
+- [SSPanel-UIM](https://github.com/voucash/sspanel-uim)
