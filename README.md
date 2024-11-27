@@ -14,7 +14,7 @@ VouCash
 ------
 [地址](https://voucash.com/api/payment?amount=30&currency=CNY&order_id=15b8388d&notify_url=http:/localhost/payment/notify/voucash)
 
-你可以将链接中notify_url改成自己的公网回调地址，测试代金券可以填 old ，回调代码看 callback.php
+你可以将链接中notify_url改成自己的公网回调地址，测试代金券可以填 654321 ，回调代码参考 callback.php
 
 工作原理
 ------
