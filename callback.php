@@ -4,7 +4,7 @@
 
     
     $ret = json_decode($raw_post_data, true); 
-    if ($ret["sinature"] == "debug") {
+    if ($ret["signature"] == "debug") {
         var_dump($ret);
         return;
     }
