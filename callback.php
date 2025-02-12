@@ -1,6 +1,6 @@
 <?php
     $raw_post_data = file_get_contents('php://input');
-    @file_put_contents('/tmp/voucash.log', $raw_post_data); //for debug
+    @file_put_contents('/tmp/voucash.log', $raw_post_data."\n", FILE_APPEND); //for debug
 
     
     $ret = json_decode($raw_post_data, true); 
