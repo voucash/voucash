@@ -36,4 +36,4 @@ VouCash
 交流与合作
 ------
 
- - telegram：@voucash
+ - telegram：[@voucash](https://t.me/voucash)
