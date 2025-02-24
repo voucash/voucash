@@ -28,6 +28,7 @@ VouCash
 
 以下插件均根据[官方API](https://voucash.com/cn/merchant)开发
 
+- [独角数卡](https://github.com/voucash/dujiaoka)
 - [whmcs](https://github.com/voucash/whmcs)
 - [v2board](https://github.com/voucash/v2board)
 - [SSPanel-UIM](https://github.com/voucash/sspanel-uim)
