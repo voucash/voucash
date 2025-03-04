@@ -30,7 +30,8 @@ VouCash
 
 - [独角数卡](https://github.com/voucash/dujiaoka)
 - [whmcs](https://github.com/voucash/whmcs)
-- [Xboard|V2board](https://github.com/voucash/v2board)
+- [Xboard](https://github.com/voucash/v2board)
+- [v2board](https://github.com/voucash/v2board)
 - [SSPanel-UIM](https://github.com/voucash/sspanel-uim)
 
 交流与合作
