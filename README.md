@@ -11,7 +11,7 @@ Features:
 - Rich plugin support
 - Supports 20+ crypto currencies, resulting in a higher conversion rate compared to using only crypto currency payments
 
-Experience URL  
+Demo 
 ------  
 [URL](https://voucash.com/api/payment?amount=30&currency=CNY&order_id=15b8388d&notify_url=http://localhost/payment/notify/voucash&return_url=https://github.com/voucash/voucash)
 
