@@ -20,7 +20,7 @@ VouCash
 工作原理
 ------
 
-消费者购买代金券后，在商家的网站或者APP上使用代金券，原代金券将会删除（相当于匿名），同时VouCash支付系统将生成新的代金券发送给商家的服务器后台（通过回调）。
+查看[入门指南](https://voucash.github.io/zh/docs/tutorial)，消费者使用代金券后，商家将获得新的代金券。
 
 任何人拥有代金券，都可以在[VouCash赎回](https://voucash.com/zh/redeem)套现
 
