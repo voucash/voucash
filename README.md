@@ -15,12 +15,12 @@ VouCash
 ------
 [地址](https://voucash.com/api/payment?amount=30&currency=CNY&order_id=15b8388d&notify_url=http://localhost/payment/notify/voucash&return_url=https://github.com/voucash/voucash)
 
-你可以将链接中notify_url改成自己的公网回调地址，测试代金券可以填 old ，回调代码参考 [callback.php](https://github.com/voucash/voucash/blob/master/callback.php)
+你可以将链接中notify_url改成自己的公网回调地址，测试代金券可以填 old ，回调代码参考`callback.php`。具体使用案例查看[入门指南](https://voucash.github.io/zh/docs/tutorial)。
 
 工作原理
 ------
 
-查看[入门指南](https://voucash.github.io/zh/docs/tutorial)，消费者使用代金券后，商家将获得新的代金券。
+消费者使用代金券后，商家将获得新的代金券。
 
 任何人拥有代金券，都可以在[VouCash赎回](https://voucash.com/zh/redeem)套现
 
