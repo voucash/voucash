@@ -27,7 +27,7 @@ VouCash
 支持插件
 ------
 
-以下插件均根据[官方API](https://voucash.com/cn/merchant)开发
+以下插件均根据[官方API](https://voucash.com/zh/merchant)开发
 
 - [独角数卡](https://github.com/voucash/dujiaoka)
 - [whmcs](https://github.com/voucash/whmcs)
