@@ -2,7 +2,7 @@ VouCash
 ===========
 简体中文 | [English](https://github.com/voucash/voucash/blob/master/README_en.md)
 
-一个简单、易用、强大的支付工具，[VouCash官网](https://voucash.com/zh)
+一个简单、易用、强大的新型支付工具，[VouCash官网](https://voucash.com/zh)
 
 特征:
 - 免注册、审核
