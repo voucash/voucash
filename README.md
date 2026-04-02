@@ -1,39 +1,81 @@
-VouCash
-===========
-简体中文 | [English](https://github.com/voucash/voucash/blob/master/README_en.md)
+<p align="center">
+  <h1 align="center">VouPay</h1>
+  <p align="center"><strong>隐私支付网关 SDK — 支持礼品卡、数字货币等匿名方式收款</strong></p>
+</p>
 
-一个简单、易用、强大的新型支付工具，[VouCash官网](https://voucash.com/zh)
+---
 
-特征:
-- 免注册、审核
-- 快速接入，低参数
-- 匿名，不可追踪
-- 丰富的插件支持
-- 支持20+虚拟币，比只使用虚拟币支付转化率高
+**演示地址: [https://api.voucash.com/test](点击体验)**
 
-体验地址
-------
-[地址](https://voucash.com/api/payment?amount=30&currency=CNY&order_id=15b8388d&notify_url=http://localhost/payment/notify/voucash&return_url=https://github.com/voucash/voucash)
+---
 
-测试时，可以将链接中notify_url改成自己的公网回调地址，代金券可以填 old ，回调代码参考`callback.php`。具体使用案例查看[入门指南](https://voucash.github.io/zh/docs/tutorial)。
+## 简介
 
-工作原理
-------
+VouPay 是一套即插即用的前端支付 SDK，商户只需引入一行 `<script>` 即可在网站中嵌入收银台界面，让用户通过礼品卡或数字货币完成支付。
 
-消费者使用代金券后，商家将获得新的代金券。
+- 🔒 **全程匿名** — 无需注册，匿名收款，加密货币提现，用户隐私零暴露
+- ⚡ **高效转化** — 相比于传统的虚拟币支付，获客门槛更低，礼品卡收款转化率更高
+- 💸 **低费率** — 收取 **5.5%** 手续费（从购物卡到虚拟币的转化费用），可提现为 USDT 等加密货币,提现无手续费
+- 🎴 **多渠道支持** — 京东E卡、Steam 充值卡、USDT (TRC20/ERC20)、BTC 等
 
-任何人拥有代金券，都可以在[VouCash赎回](https://voucash.com/zh/redeem)套现
+---
 
-支持插件
-------
+## SDK 接入
 
-以下插件均根据[官方API](https://voucash.com/zh/merchant)开发
+### 弹窗模式
 
-- [独角数卡](https://github.com/voucash/dujiaoka)
-- [whmcs](https://github.com/voucash/whmcs)
-- [Xboard](https://github.com/voucash/v2board)
-- [v2board](https://github.com/voucash/v2board)
-- [SSPanel-UIM](https://github.com/voucash/sspanel-uim)
+用户点击按钮后弹出毛玻璃风格收银台，右下角自动挂载购物车悬浮按钮用于查看历史记录。完整的后端回调处理示例请参考 [callback.php](callback.php)。
+
+```html
+<button id="pay-btn">立即支付</button>
+
+<script src="https://api.voucash.com/voupaysdk.js"></script>
+<script>
+  VouPaySDK.init({
+    orderId: 'order_001',          // 商户订单号（唯一）
+    amount: 99.00,                 // 金额
+    currency: 'CNY',               // 币种
+    callbackUrl: 'https://your-site.com/voucash',  // 回调地址
+    lang: 'zh',                    // 'zh' | 'en'，留空自动检测
+    trigger: '#pay-btn',           // 触发按钮（CSS 选择器或 DOM 元素）
+    // mode: 'debug',              // 测试模式：输入 TEST 自动审批，不产生真实凭证
+    onSuccess: function (data) {
+      // 前端收到成功通知（仅做 UI 提示用，安全校验请依赖后端回调）
+      console.log('支付成功', data);
+    },
+    onFailure: function (data) {
+      console.log('支付失败', data);
+    }
+  });
+</script>
+```
+
+
+---
+
+### 详细参数
+
+| 参数 | 类型 | 必填 | 说明 |
+|------|------|:----:|------|
+| `orderId` | string | ✅ | 商户唯一订单号 |
+| `amount` | number | ✅ | 支付金额 |
+| `currency` | string | ✅ | 币种（`CNY` / `USD`） |
+| `callbackUrl` | string | ✅ | 支付结果回调地址（你的服务端） |
+| `trigger` | string / Element | ✅ | 触发弹窗的按钮（CSS 选择器或 DOM 元素） |
+| `lang` | string | — | 强制语言 `zh` / `en`，默认自动检测 |
+| `mode` | string | — | 设为 `debug` 开启测试模式 |
+| `onSuccess` | function | — | 前端成功回调 `(data) => {}` |
+| `onFailure` | function | — | 前端失败回调 `(data) => {}` |
+
+---
+
+### 怎么提现
+
+用户使用礼品卡或数字货币支付后，你的管理后台会收到一个本平台的现金券，凭借此现金券可以前往 [https://api.voucash.com/zh/console](https://api.voucash.com/zh/console) 提现USDT或加密货币。
+
+> ⚠️ **特别注意**：现金券不会第一时间发放，通常会延迟 **3 ~ 5 个工作日**（用于预防用户的不可测行为，如退款、争议等）,在发送现金券前，会发送一个回调通知提醒发货，1到3天内会第二次回调发送现金券或提醒用户退款，具体实现看后端代码或者插件。
+
+---
 
 交流与合作
 ------

@@ -1,49 +1,86 @@
 <?php
-    $raw_post_data = file_get_contents('php://input');
-    @file_put_contents('/tmp/voucash.log', $raw_post_data."\n", FILE_APPEND); //for debug
+/**
+ * VouPay 商户回调示例
+ * 
+ * 将此文件部署到你的 callbackUrl 对应的路由上。
+ * VouPay 会在订单状态变更时向此地址发送 POST 请求。
+ * 
+ */
 
-    
-    $ret = json_decode($raw_post_data, true); 
-    if ($ret["signature"] == "debug") {
-        var_dump($ret);
-        return;
-    }
+// 1. 读取 VouPay 推送的 JSON 数据
+$raw = file_get_contents('php://input');
+$data = json_decode($raw, true);
 
-    // below for production, 
-    $ch = curl_init("https://voucash.com/api/payment/verify");
+if (!$data || empty($data['orderId'])) {
+    http_response_code(400);
+    echo 'invalid payload';
+    exit;
+}
 
-    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $raw_post_data);
-    curl_setopt($ch, CURLOPT_SSLVERSION, 6);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-    // curl_setopt($ch, CURLOPT_CAINFO, $tmpfile);
-    curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Connection: Close'));
-    $res = curl_exec($ch);
-    $info = curl_getinfo($ch);
-    $http_code = $info['http_code'];
+// 处理 completed（已完成）、paid（已支付）和 rejected（已拒绝）状态
+$status = $data['status'];
+if (!in_array($status, ['completed', 'paid', 'rejected'])) {
+    echo 'ignored status: ' . $status;
+    exit;
+}
 
+// 2. 调用 VouPay 验证接口，确认回调真实性（务必执行，防伪造）
+$ch = curl_init('https://api.voucash.com/api/verify');
+curl_setopt_array($ch, [
+    CURLOPT_POST           => true,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_TIMEOUT        => 30,
+    CURLOPT_POSTFIELDS     => $raw,
+    CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+]);
 
-    if ( ! ($res)) {
-        $errno = curl_errno($ch);
-        $errstr = curl_error($ch);
-        curl_close($ch);
-        exit("cURL error: [$errno] $errstr");
-    }
+$response  = curl_exec($ch);
+$httpCode  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
 
+if ($httpCode !== 200) {
+    http_response_code(500);
+    echo "verify failed: HTTP $httpCode";
+    exit;
+}
 
-    if ($http_code != 200) {
-        curl_close($ch);
-        exit("server error wrong $http_code");
-    }
+$verify = json_decode($response, true);
 
-    curl_close($ch);
+if (!isset($verify['valid']) || $verify['valid'] !== true) {
+    http_response_code(403);
+    echo 'invalid verification';
+    exit;
+}
 
-    if ($res == "verified") {
-        // handle your order
-    }
+// 3. 校验金额和币种是否与本地订单一致
+$orderId     = $data['orderId'];
+$amount      = floatval($data['amount']);
+$currency    = $data['currency'];
+$voucherCode = $data['voucherCode'] ?? '';
 
+// --- 从数据库查询本地订单，验证金额和币种 ---
+// $order = $db->get_where('orders', ['order_id' => $orderId])->row_array();
+// if (empty($order)) {
+//     http_response_code(404);
+//     echo 'order not found';
+//     exit;
+// }
+// if (abs($order['price'] - $amount) > 0.01 || $order['currency'] !== $currency) {
+//     http_response_code(400);
+//     echo 'amount or currency mismatch';
+//     exit;
+// }
+
+// 4. 根据状态分别处理业务逻辑，completed表示平台已放款，paid表示用户已完成付款（还需要平台最终确认）
+if ($status === 'completed' || $status === 'paid') {
+
+    // --- 支付成功：标记订单为已支付、发货等 ---
+    // $db->update('orders', ['paid' => 1, 'voucher' => $voucherCode], ['order_id' => $orderId]);                                                                                     
+    echo 'success';//必须返回success！！！
+
+} elseif ($status === 'rejected') {
+    // --- 支付被拒：用户投诉、举报等 ---
+    $rejectMessage = $data['message'] ?? '支付审核未通过';
+    // $db->update('orders', ['paid' => -1, 'remark' => $rejectMessage], ['order_id' => $orderId]);
+    echo 'rejected handled';
+}
