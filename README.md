@@ -5,7 +5,7 @@
 
 ---
 
-**演示地址: [https://api.voucash.com/test](点击体验)**
+**演示地址: [点击体验](https://api.voucash.com/test)**
 
 ---
 
