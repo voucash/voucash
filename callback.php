@@ -25,7 +25,7 @@ if (!in_array($status, ['completed', 'paid', 'rejected'])) {
 }
 
 // 2. 调用 VouPay 验证接口，确认回调真实性（务必执行，防伪造）
-$ch = curl_init('https://api.voucash.com/api/verify');
+$ch = curl_init('https://voupay.io/api/verify');
 curl_setopt_array($ch, [
     CURLOPT_POST           => true,
     CURLOPT_RETURNTRANSFER => true,

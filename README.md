@@ -5,7 +5,7 @@
 
 ---
 
-**演示地址: [点击体验](https://api.voucash.com/test)**
+**演示地址: [点击体验](https://voucash.com/test)**
 
 ---
 
@@ -29,7 +29,7 @@ VouPay 是一套即插即用的前端支付 SDK，商户只需引入一行 `<scr
 ```html
 <button id="pay-btn">立即支付</button>
 
-<script src="https://api.voucash.com/voupaysdk.js"></script>
+<script src="https://voupay.io/voupaysdk.js"></script>
 <script>
   VouPaySDK.init({
     orderId: 'order_001',          // 商户订单号（唯一）
@@ -71,7 +71,7 @@ VouPay 是一套即插即用的前端支付 SDK，商户只需引入一行 `<scr
 
 ### 怎么提现
 
-用户使用礼品卡或数字货币支付后，你的管理后台会收到一个本平台的现金券，凭借此现金券可以前往 [https://api.voucash.com/zh/console](https://api.voucash.com/zh/console) 提现USDT或加密货币。
+用户使用礼品卡或数字货币支付后，你的管理后台会收到一个本平台的现金券，凭借此现金券可以前往 [https://voucash.com/zh/console](https://voucash.com/zh/console) 提现USDT或加密货币。
 
 > ⚠️ **特别注意**：现金券不会第一时间发放，通常会延迟 **3 ~ 5 个工作日**（用于预防用户的不可测行为，如退款、争议等）,在发送现金券前，会发送一个回调通知提醒发货，1到3天内会第二次回调发送现金券或提醒用户退款，具体实现看后端代码或者插件。
 
