@@ -25,6 +25,7 @@ VouPay 是一套即插即用的前端支付 SDK，商户只需引入一行 `<scr
 如果你使用的是现成系统，优先直接使用对应插件仓库：
 
 - new-api（易支付）: [voucash/new-api](https://github.com/voucash/new-api)
+- v2board（易支付）: [voucash/v2board](https://github.com/voucash/v2board)
 
 ---
 
